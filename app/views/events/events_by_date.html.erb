@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-md-12 jumbotron">
+    <%= render partial: "date_select" %>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <% @tracks.uniq.each do |track| %>
+          <th><%= track.name %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @events_on_date.each do |time, events| %>
+        <tr>
+          <th><%= time.to_s + ":00 - " + (time + 1).to_s + ":00" %></th>
+          <% flag = false %>
+          <% @tracks.uniq.each do |track| %>
+            <% output_td = "" %>
+            <% events.each do |ev| %>
+              <% if track.id == ev.track.id %>
+                <% output_td += "<span style='height: "+ ev.span(time) +";'>" + ev.name + "</span><br/>" %>
+                <% flag = true %>
+              <% end %>
+            <% end %>
+            <% if !output_td.blank? %>
+              <td><%= output_td.html_safe %></td>
+            <% end %>
+            <% if flag == false %>
+              <td></td>
+            <% end %>
+          <% end %>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

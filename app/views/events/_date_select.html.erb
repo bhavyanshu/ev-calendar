@@ -1,0 +1,5 @@
+<%= form_for :date, :url => "/events", method: :get do |f| %>
+<%= f.label :date, "Date:" %>
+<%= select_tag "date", options_for_select(@dates) %>
+<%= f.submit "Get Events" %>
+<% end %>
